@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/src/main/res/values-it/strings.xml -->
+    <eat-comment/>
+    <string-array name="array_colori">
+        <item>none</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>cyan</item>
+        <item>red</item>
+        <item>violet</item>
+        <item>yellow</item>
+        <item>white</item>
+        <item>Webradio</item>
+    </string-array>
+    <string-array name="array_plugin">
+        <item>Ambient (muovi le orecchie)</item>
+        <item>Invia un testo</item>
+        <item>Colore respirazione</item>
+        <item>Ambient (lampeggio naso)</item>
+        <item>Sveglia e dormi</item>
+        <item>Webradio</item>
+        </string-array>
+    <!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-it/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Vai alla home page"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Vai in alto"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Altre opzioni"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Fine"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Visualizza tutte"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Scegli un\'applicazione"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Cancella query"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Query di ricerca"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Cerca"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Invia query"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Ricerca vocale"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Condividi con"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Condividi con %s"</string>
+    <!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/src/main/res/values-it/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_stream">Radio stream</string>
+    <string name="app_name">Nabz</string>
+    <string name="bunny_off">non in linea</string>
+    <string name="bunny_on">in linea</string>
+    <string name="chiudi">chiudi</string>
+    <string name="choice_no">no</string>
+    <string name="choice_yes">si</string>
+    <string name="dialog_setting">Dati di connessione</string>
+    <string name="dialog_setting_cancel">Annulla</string>
+    <string name="dialog_setting_mac">Mac address</string>
+    <string name="dialog_setting_password">Password</string>
+    <string name="dialog_setting_save">Salva</string>
+    <string name="dialog_setting_server">Server</string>
+    <string name="dialog_setting_utente">Utente</string>
+    <string name="dialog_stream">Elenco radio stream</string>
+    <string name="dialog_stream_stream_name">Nome della radio</string>
+    <string name="dialog_stream_url">Url</string>
+    <string name="msg_alert">Cancelli?</string>
+    <string name="net_ko">problemi di connessione</string>
+    <string name="net_ok">connessione avvenuta</string>
+    <string name="plugin_left">Orecchio sinistro</string>
+    <string name="plugin_naso_due">doppio lampeggio</string>
+    <string name="plugin_naso_no">nessun lampeggio</string>
+    <string name="plugin_naso_uno">un lampeggio</string>
+    <string name="plugin_right">Orecchio destro</string>
+    <string name="plugin_send">Invia al coniglio</string>
+    <string name="plugin_sleep">dormi</string>
+    <string name="plugin_stream_stop">ferma lo stream</string>
+    <string name="plugin_title1">Muove le orecchie</string>
+    <string name="plugin_title2">Invia un testo</string>
+    <string name="plugin_title3">Colore respirazione</string>
+    <string name="plugin_title4">Lampeggio naso</string>
+    <string name="plugin_title5">Sveglia e dormi</string>
+    <string name="plugin_title6">Webradio</string>
+    <string name="plugin_wakeup">sveglia</string>
+    <string name="title_alert">Attenzione</string>
+    <string name="update_ok">dati aggiornati</string>
+</resources>
