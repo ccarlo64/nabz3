@@ -124,8 +124,11 @@ public class MainActivity extends Activity
                   listLR.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
                 }
                 mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listLR));//spinnerValues
-				
-				SeekBar seekBarLeft = (SeekBar)dialog.findViewById(R.id.sbLeft); 
+				if (g.getLastBunnyChoice()>=0) {
+                    mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
+
+				SeekBar seekBarLeft = (SeekBar)dialog.findViewById(R.id.sbLeft);
 				final TextView seekBarValueLeft = (TextView)dialog.findViewById(R.id.textSeekBarSx); 
 				
 				seekBarLeft.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
@@ -174,7 +177,7 @@ public class MainActivity extends Activity
           		    public void onClick(View v) {
           			   
 					ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
-					
+					g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14032015
 			//		String urlPlugin = g.getServer();//tmp[2]; //server
 				//	urlPlugin = urlPlugin + "/ojn_api/bunny/";
 					//urlPlugin = urlPlugin + bunnyChoice.getMac();///tmp[3]; //mac
@@ -240,7 +243,9 @@ public class MainActivity extends Activity
                   list.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
                 }
                 mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,list));//spinnerValues
-        		
+                if (g.getLastBunnyChoice()>=0) {
+                  mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
              	dialogButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -249,7 +254,7 @@ public class MainActivity extends Activity
 	//			urlPlugin = urlPlugin + "/ojn_api/bunny/";
 				
 				ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
-				
+                g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
 				//Globals g = Globals.getInstance();
 				EditText et = (EditText) dialog.findViewById(R.id.edSendText);
 				String tmpx = et.getText().toString();
@@ -287,6 +292,9 @@ public class MainActivity extends Activity
                   listAE.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
                 }
                 mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listAE));//spinnerValues
+                if (g.getLastBunnyChoice()>=0) {
+                  mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
 
         		Spinner spinner = (Spinner) dialog.findViewById(R.id.spColori);
          	    //String[] colori = getResources().getStringArray(R.array.array_colori); 
@@ -307,6 +315,7 @@ public class MainActivity extends Activity
 					//urlPlugin = urlPlugin + "/ojn_api/bunny/";
 						
 					ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
+                    g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
 					//String token=g.getToken();
 					//urlPlugin = urlPlugin + bunnyChoice.getMac();///tmp[3]; //mac
 
@@ -348,7 +357,9 @@ public class MainActivity extends Activity
                   listNaso.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
                 }
                 mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listNaso));//spinnerValues
-        		
+                if (g.getLastBunnyChoice()>=0) {
+                  mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
              	dialogButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -362,6 +373,7 @@ public class MainActivity extends Activity
 				//urlPlugin = urlPlugin + "/ojn_api/bunny/";
 
 				ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
+                g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
 //Log.d("spinner",bunnyChoice.getMac());
 
                 //String token=g.getToken();
@@ -397,13 +409,15 @@ public class MainActivity extends Activity
 
 
           		mySpinnerTmp = (Spinner) dialog.findViewById(R.id.spSleepWakeup);
-                  List <ListBunnies> listSleepWakeup = new LinkedList <ListBunnies>();
-                  for(int i=0;i<g.getBunniesName().size();i++)
-                  {
-                	  listSleepWakeup.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
-                  }
-                  mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listSleepWakeup));
-          		
+                List <ListBunnies> listSleepWakeup = new LinkedList <ListBunnies>();
+                for(int i=0;i<g.getBunniesName().size();i++)
+                {
+                   listSleepWakeup.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
+                }
+                mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listSleepWakeup));
+                if (g.getLastBunnyChoice()>=0) {
+                  mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
                	dialogButton.setOnClickListener(new OnClickListener() {
   				@Override
   				public void onClick(View v) {
@@ -417,6 +431,7 @@ public class MainActivity extends Activity
   				//urlPlugin = urlPlugin + "/ojn_api/bunny/";
 
   				ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
+                g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
   //Log.d("spinner",bunnyChoice.getMac());
   				String urlPlugin;
                 //String token=g.getToken();
@@ -465,7 +480,9 @@ public class MainActivity extends Activity
                  listWebradio.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
                 }
                 mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listWebradio));
-
+                if (g.getLastBunnyChoice()>=0) {
+                   mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                }
                 ArrayList<Stream> ls = databaseHelper.getStreamData();
    				mySpinnerRadio = (Spinner) dialog.findViewById(R.id.spRadio);
 
@@ -478,6 +495,8 @@ public class MainActivity extends Activity
   				public void onClick(View v) {
 
                     ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
+                    g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
+
                     String urlCommand;
                     String urlPlugin;
                     String messageCrypt;

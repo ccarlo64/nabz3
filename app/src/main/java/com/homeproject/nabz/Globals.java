@@ -9,7 +9,7 @@ public class Globals{
 	   private int data=0;//test
 	   private String token="";
 	   private String server="";
-
+       private int lastBunnyChoice = -1;
 //      private String urlPrep="";
 
     //
@@ -99,7 +99,14 @@ public class Globals{
         return this.urlPrep;
     }
 */
-	   
+       public void setLastBunnyChoice(int i){
+    this.lastBunnyChoice=i;
+}
+       public Integer getLastBunnyChoice(){
+        return this.lastBunnyChoice;
+    }
+
+
 	   public static synchronized Globals getInstance(){
 	     if(instance==null){
 	       instance=new Globals();
