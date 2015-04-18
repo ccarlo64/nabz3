@@ -3,7 +3,7 @@ package com.homeproject.nabz;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+import android.widget.PopupMenu;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -70,8 +70,349 @@ public class MainActivity extends Activity
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, pi);        
         lv.setAdapter(adapter);
-        
-        
+
+
+//
+        final Button button1 = (Button) findViewById(R.id.bnt_option);
+        button1.setOnClickListener(new OnClickListener() {
+
+
+        @Override
+        public void onClick(View v) {
+            //Creating the instance of PopupMenu
+            PopupMenu popup = new PopupMenu(MainActivity.this, button1);
+            //Inflating the Popup using xml file
+            popup.getMenuInflater().inflate(R.menu.main, popup.getMenu());
+
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+//
+                    int id = item.getItemId();
+                    if (id == R.id.debug) {
+
+                        final Dialog dialog = new Dialog(context);
+                        // Include dialog.xml file
+                        dialog.setContentView(R.layout.debug);
+                        // Set dialog title
+                        dialog.setTitle("Debug!");
+
+                        String lastURL = g.getLastURL();
+                        TextView text1 = (TextView) dialog.findViewById(R.id.textDebugURL);
+                        text1.setText(lastURL);
+                        String lastResponse = g.getLastResponse();
+                        TextView text2 = (TextView) dialog.findViewById(R.id.textDebugResponse);
+                        text2.setText(lastResponse);
+
+                        dialog.show();
+
+                        Button declineButton = (Button) dialog.findViewById(R.id.bntDebugOk);
+                        // if decline button is clicked, close the custom dialog
+                        declineButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Close dialog
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+
+
+                    if (id == R.id.about) {
+                        // Crea custom dialog object
+                        final Dialog dialog = new Dialog(context);
+                        // layout
+                        dialog.setContentView(R.layout.about);
+                        // Set title
+                        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setTitle("About");
+
+                        TextView text = (TextView) dialog.findViewById(R.id.textDialog);
+                        text.setText("Nabz version 3.1 :-) by carlo64");
+
+                        dialog.show();
+
+                        Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
+                        // click ...esco...
+                        declineButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Close dialog
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+
+                    if (id == R.id.action_settings) {
+
+                        //Toast.makeText(getApplicationContext(),"settaggi",Toast.LENGTH_LONG).show();
+                        // *************************************
+                        //
+                        // *************************************
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.custom_settings);
+                        dialog.setTitle(R.string.dialog_setting);
+
+                        String[] tmp=null;
+                        tmp = databaseHelper.getC();
+
+                        EditText loginUtente= (EditText) dialog.findViewById(R.id.utente);
+                        loginUtente.setText(tmp[0]);
+
+                        EditText loginPassword= (EditText) dialog.findViewById(R.id.password);
+                        loginPassword.setText(tmp[1]);
+
+                        EditText loginServer= (EditText) dialog.findViewById(R.id.server);
+                        loginServer.setText(tmp[2]);
+
+    		/*EditText loginMac= (EditText) dialog.findViewById(R.id.coniglio);
+    		loginMac.setText(tmp[3]);*/
+
+                        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                        // click... esco
+                        dialogButton.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                        Button dialogSalva = (Button) dialog.findViewById(R.id.salvaDati);
+                        dialogSalva.setOnClickListener(new OnClickListener() {
+
+                            @Override
+                            public void onClick(View arg0) {
+                                // TODO Auto-generated method stub
+                                String a1=null;
+                                EditText loginUtente= (EditText) dialog.findViewById(R.id.utente);
+                                a1 = loginUtente.getText().toString();
+                                String a2=null;
+                                EditText loginPassword= (EditText) dialog.findViewById(R.id.password);
+                                a2 = loginPassword.getText().toString();
+                                String a3=null;
+                                EditText loginServer= (EditText) dialog.findViewById(R.id.server);
+                                a3 = loginServer.getText().toString();
+    				/*String a4=null;
+    				EditText loginMac= (EditText) dialog.findViewById(R.id.coniglio);
+    				a4 = loginMac.getText().toString();*/
+                                databaseHelper.updateDati(a1,a2,a3);//,a4);
+
+                                Toast.makeText(getApplicationContext(), R.string.update_ok, Toast.LENGTH_SHORT).show();
+
+                                String urlo = urlHelper.getAuthUrl( a3, a1, a2);
+//                    String urlo=null;
+                                //  		        urlo = a3 + "/ojn_api/accounts/auth?login=" + a1 + "&pass=" + a2;
+                                new HttpAsync().execute( urlo );
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+
+
+
+
+
+                        return true;
+                    }
+
+                    //
+                    if (id == R.id.action_stream) {
+
+                        // *************************************
+                        // RADIO / STREAM
+                        // *************************************
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.stream);
+                        dialog.setTitle(R.string.dialog_stream);
+
+                        final EditText mText = (EditText) dialog.findViewById(R.id.name);
+                        final EditText etSite = (EditText) dialog.findViewById(R.id.site);
+
+                        Button mAdd = (Button) dialog.findViewById(R.id.add);
+
+                        final ListView mList = (ListView) dialog.findViewById(R.id.list);
+                        cursorStream = databaseHelper.getStreams();
+
+                        String[] headers = new String[] {"NAMESTREAM", "URLSTREAM"};
+                        mAdapter = new SimpleCursorAdapter(context, android.R.layout.two_line_list_item,
+                                cursorStream, headers, new int[]{android.R.id.text1, android.R.id.text2},0);
+                        mList.setAdapter(mAdapter);
+
+                        mAdd.setOnClickListener(new OnClickListener() {
+
+                            @Override
+                            public void onClick(View arg0) {
+                                // TODO Auto-generated method stub
+                                String a1 = mText.getText().toString();
+                                String a2 = etSite.getText().toString();
+                                databaseHelper.insertDatiStream( databaseHelper.getWritableDatabase(), a1,a2);
+
+                                Toast.makeText(getApplicationContext(), "save", Toast.LENGTH_SHORT).show();
+                                cursorStream = databaseHelper.getStreams();
+                                mAdapter.changeCursor(cursorStream);
+                                // blank input
+                                mText.setText("");
+                                etSite.setText("");
+                            }
+                        });
+
+
+                        mList.setOnItemClickListener(new OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent,
+                                                    View view, int position, long id) {
+                                // TODO Auto-generated method stub
+
+                                final int p = position;
+                                AlertDialog.Builder miaAlert = new AlertDialog.Builder(context);
+                                miaAlert.setMessage(R.string.msg_alert);
+                                miaAlert.setTitle(R.string.title_alert);
+                                String yes = getResources().getString(R.string.choice_yes);
+                                String no = getResources().getString(R.string.choice_no);
+
+                                miaAlert.setCancelable(false);
+                                miaAlert.setPositiveButton(yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+//					  Toast.makeText(getApplicationContext(), "SI", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getApplicationContext(), Integer.toString(p), Toast.LENGTH_SHORT).show();
+
+
+                                        cursorStream.moveToPosition(p);
+                                        //Get the id value of this row
+                                        String rowId = cursorStream.getString(0); //Column 0 of the cursor is the id
+                                        databaseHelper.deleteStream( databaseHelper.getWritableDatabase(), new String[] {rowId});
+                                        cursorStream = databaseHelper.getStreams();
+                                        mAdapter.changeCursor(cursorStream);
+
+                                    }
+                                });
+
+                                miaAlert.setNegativeButton(no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+//						  Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                AlertDialog alert = miaAlert.create();
+                                alert.show();
+//					return;
+                            }
+                        });
+
+                        dialog.show();
+
+
+                        return true;
+                    }
+////////////////////////
+                    if (id == R.id.action_packet) {
+
+                        // *************************************
+                        // PACKET
+                        // *************************************
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.packet);
+                        dialog.setTitle(R.string.dialog_stream);
+
+                        final EditText mText = (EditText) dialog.findViewById(R.id.name_packet);
+                        final EditText etSite = (EditText) dialog.findViewById(R.id.date_packet);
+
+                        Button mAdd = (Button) dialog.findViewById(R.id.add_packet);
+
+                        final ListView mList = (ListView) dialog.findViewById(R.id.list_packet);
+                        cursorStream = databaseHelper.getPackets();
+
+                        String[] headers = new String[] {"NAMEPACKET", "DATEPACKET"};
+                        mAdapter = new SimpleCursorAdapter(context, android.R.layout.two_line_list_item,
+                                cursorStream, headers, new int[]{android.R.id.text1, android.R.id.text2},0);
+                        mList.setAdapter(mAdapter);
+
+                        mAdd.setOnClickListener(new OnClickListener() {
+
+                            @Override
+                            public void onClick(View arg0) {
+                                // TODO Auto-generated method stub
+                                String a1 = mText.getText().toString();
+                                String a2 = etSite.getText().toString();
+                                databaseHelper.insertDatiPacket(databaseHelper.getWritableDatabase(), a1, a2);
+
+                                Toast.makeText(getApplicationContext(), "save", Toast.LENGTH_SHORT).show();
+                                cursorStream = databaseHelper.getPackets();
+                                mAdapter.changeCursor(cursorStream);
+                                // blank input
+                                mText.setText("");
+                                etSite.setText("");
+                            }
+                        });
+
+
+                        mList.setOnItemClickListener(new OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent,
+                                                    View view, int position, long id) {
+                                // TODO Auto-generated method stub
+
+                                final int p = position;
+                                AlertDialog.Builder miaAlert = new AlertDialog.Builder(context);
+                                miaAlert.setMessage(R.string.msg_alert);
+                                miaAlert.setTitle(R.string.title_alert);
+                                String yes = getResources().getString(R.string.choice_yes);
+                                String no = getResources().getString(R.string.choice_no);
+
+                                miaAlert.setCancelable(false);
+                                miaAlert.setPositiveButton(yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+//					  Toast.makeText(getApplicationContext(), "SI", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getApplicationContext(), Integer.toString(p), Toast.LENGTH_SHORT).show();
+
+
+                                        cursorStream.moveToPosition(p);
+                                        //Get the id value of this row
+                                        String rowId = cursorStream.getString(0); //Column 0 of the cursor is the id
+                                        databaseHelper.deletePacket(databaseHelper.getWritableDatabase(), new String[]{rowId});
+                                        cursorStream = databaseHelper.getPackets();
+                                        mAdapter.changeCursor(cursorStream);
+
+                                    }
+                                });
+
+                                miaAlert.setNegativeButton(no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+//						  Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                AlertDialog alert = miaAlert.create();
+                                alert.show();
+//					return;
+                            }
+                        });
+
+                        dialog.show();
+
+
+                        return true;
+                    }
+
+
+                    //
+//                        return super.onOptionsItemSelected(item);
+                    //                  }
+//-----------------------------------
+                    return true;
+                }
+            });
+
+            popup.show();//showing popup menu
+        }
+    });//closing the setOnClickListener method
+
+
+
+
         if(isConnected()){
         	//tvSonoConnesso.setBackgroundColor(0xFF00CC00);
         	tvConnect.setText(R.string.net_ok);
@@ -106,8 +447,9 @@ public class MainActivity extends Activity
                 */              
     			Button dialogButton;
     			final Dialog dialog = new Dialog(context);
-              
-			final Spinner mySpinnerRadio;
+
+                final Spinner mySpinnerRadio;
+                final Spinner mySpinnerPacket;
 			switch (position) {
               case 0:
 				// *************************************
@@ -282,7 +624,7 @@ public class MainActivity extends Activity
         		// Led breath
         		// *************************************
 
-        		dialog.setContentView(R.layout.plugin_led_resipro);
+        		dialog.setContentView(R.layout.plugin_led_breath);
         		dialog.setTitle(R.string.plugin_title3);
         		
         		mySpinnerTmp = (Spinner) dialog.findViewById(R.id.spLedRespiro);
@@ -345,7 +687,7 @@ public class MainActivity extends Activity
         		// *************************************
          		// NOSE
         		// *************************************
-        		dialog.setContentView(R.layout.plugin_naso);
+        		dialog.setContentView(R.layout.plugin_nose);
         		dialog.setTitle(R.string.plugin_title4);
         		dialogButton = (Button) dialog.findViewById(R.id.bntNaso);
 
@@ -554,7 +896,61 @@ public class MainActivity extends Activity
             	break;
             	// *************************************** end webradio
 
-        		
+                case 6:
+                    // *************************************
+                    // packet
+                    // *************************************
+                    dialog.setContentView(R.layout.plugin_packet);
+                    dialog.setTitle(R.string.plugin_title7);
+                    dialogButton = (Button) dialog.findViewById(R.id.bnt_packet);
+
+                    mySpinnerTmp = (Spinner) dialog.findViewById(R.id.sp_packet_bunny);
+                    List <ListBunnies> listPacket = new LinkedList <ListBunnies>();
+                    for(int i=0;i<g.getBunniesName().size();i++) {
+                        listPacket.add(new ListBunnies(g.getBunniesName().get(i),g.getBunniesMac().get(i),g.getBunniesOnLine().get(i),false));
+                    }
+                    mySpinnerTmp.setAdapter(new MyAdapterBunnies(getApplicationContext(), R.layout.custom_spinner,listPacket));
+                    if (g.getLastBunnyChoice()>=0) {
+                        mySpinnerTmp.setSelection( g.getLastBunnyChoice() ); // add 14032015
+                    }
+                    ArrayList<Packet> lsp = databaseHelper.getPacketData();
+                    mySpinnerPacket = (Spinner) dialog.findViewById(R.id.sp_packet_date);
+
+                    mySpinnerPacket.setAdapter(
+                            new MyAdapterPacket(getApplicationContext(), R.layout.custom_sp_packets,lsp));
+
+                    dialogButton.setOnClickListener(new OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            ListBunnies bunnyChoice = (ListBunnies) mySpinnerTmp.getSelectedItem();
+                            g.setLastBunnyChoice( mySpinnerTmp.getSelectedItemPosition() ); // add 14022015
+
+                            String urlCommand;
+                            String urlPlugin;
+                            String messageCrypt;
+
+                            Packet urlChoice = (Packet) mySpinnerPacket.getSelectedItem();
+                            urlCommand =  urlChoice.getPacketDate();
+                            Log.d("url","cmd "+urlCommand);
+                            // create packet
+                            messageCrypt =  urlCommand ;
+                            urlPlugin = urlHelper.getBunnySendPacket( g.getServer(),bunnyChoice.getMac(), messageCrypt);
+
+                            urlPlugin = urlHelper.addToken(urlPlugin, g.getToken());
+
+                            urlPlugin = urlPlugin.replace(" ", "%20");
+//Log.d("u",urlPlugin);
+                            new HttpAsync().execute(urlPlugin);
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+
+                    break;
+                // *************************************** end packet
+
                default:
          			// *************************************
          			//
@@ -602,246 +998,6 @@ public class MainActivity extends Activity
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.debug) {
-
-           final Dialog dialog = new Dialog(context);
-           // Include dialog.xml file
-           dialog.setContentView(R.layout.debug);
-           // Set dialog title
-           dialog.setTitle("Debug!");
-
-           String lastURL = g.getLastURL();
-           TextView text1 = (TextView) dialog.findViewById(R.id.textDebugURL);
-           text1.setText(lastURL);
-           String lastResponse = g.getLastResponse();
-           TextView text2 = (TextView) dialog.findViewById(R.id.textDebugResponse);
-           text2.setText(lastResponse);
-
-           dialog.show();
-            
-           Button declineButton = (Button) dialog.findViewById(R.id.bntDebugOk);
-           // if decline button is clicked, close the custom dialog
-           declineButton.setOnClickListener(new OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   // Close dialog
-                   dialog.dismiss();
-               }
-           });        	
-       	
-       }
-        
-        
-        if (id == R.id.about) {
-        	 // Crea custom dialog object
-            final Dialog dialog = new Dialog(context);
-            // layout
-            dialog.setContentView(R.layout.about);
-            // Set title
-            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setTitle("About");
-
-            TextView text = (TextView) dialog.findViewById(R.id.textDialog);
-            text.setText("Nabz version 3.0 :-) by carlo64");
-
-            dialog.show();
-             
-            Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
-            // click ...esco...
-            declineButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Close dialog
-                    dialog.dismiss();
-                }
-            });        	
-        	
-        }
-        
-        if (id == R.id.action_settings) {
-
-            //Toast.makeText(getApplicationContext(),"settaggi",Toast.LENGTH_LONG).show();  
-    		// *************************************
-    		//
-    		// *************************************
-    		final Dialog dialog = new Dialog(context);
-    		dialog.setContentView(R.layout.custom);
-    		dialog.setTitle(R.string.dialog_setting);
-
-    		String[] tmp=null;
-    		tmp = databaseHelper.getC();
-    		
-    		EditText loginUtente= (EditText) dialog.findViewById(R.id.utente);
-    		loginUtente.setText(tmp[0]);
-    		
-    		EditText loginPassword= (EditText) dialog.findViewById(R.id.password);
-    		loginPassword.setText(tmp[1]);
-
-    		EditText loginServer= (EditText) dialog.findViewById(R.id.server);
-    		loginServer.setText(tmp[2]);
-
-    		/*EditText loginMac= (EditText) dialog.findViewById(R.id.coniglio);
-    		loginMac.setText(tmp[3]);*/
-    		
-    		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-    		// click... esco
-    		dialogButton.setOnClickListener(new OnClickListener() {
-    			@Override
-    			public void onClick(View v) {
-    				dialog.dismiss();
-    			}
-    		});
-
-    		
-    		Button dialogSalva = (Button) dialog.findViewById(R.id.salvaDati);
-    		dialogSalva.setOnClickListener(new OnClickListener() {
-    			
-    			@Override
-    			public void onClick(View arg0) {
-    				// TODO Auto-generated method stub
-    				String a1=null;
-    				EditText loginUtente= (EditText) dialog.findViewById(R.id.utente);
-    				a1 = loginUtente.getText().toString();
-    				String a2=null;
-    				EditText loginPassword= (EditText) dialog.findViewById(R.id.password);
-    				a2 = loginPassword.getText().toString();
-    				String a3=null;
-    				EditText loginServer= (EditText) dialog.findViewById(R.id.server);
-    				a3 = loginServer.getText().toString();
-    				/*String a4=null;
-    				EditText loginMac= (EditText) dialog.findViewById(R.id.coniglio);
-    				a4 = loginMac.getText().toString();*/
-    				databaseHelper.updateDati(a1,a2,a3);//,a4);
-
-    				Toast.makeText(getApplicationContext(), R.string.update_ok, Toast.LENGTH_SHORT).show();
-
-                    String urlo = urlHelper.getAuthUrl( a3, a1, a2);
-//                    String urlo=null;
-  //  		        urlo = a3 + "/ojn_api/accounts/auth?login=" + a1 + "&pass=" + a2;
-    		        new HttpAsync().execute( urlo );
-    				dialog.dismiss();
-    			}
-    		});
-    		dialog.show();
-            
-            
-            
-            
-            
-            return true;     
-        }
-
-        //
-        if (id == R.id.action_stream) {
-
-    		// *************************************
-    		// RADIO / STREAM
-    		// *************************************
-    		final Dialog dialog = new Dialog(context);
-    		dialog.setContentView(R.layout.stream);
-    		dialog.setTitle(R.string.dialog_stream);
-
-            final EditText mText = (EditText) dialog.findViewById(R.id.name);
-            final EditText etSite = (EditText) dialog.findViewById(R.id.site);
-            
-            Button mAdd = (Button) dialog.findViewById(R.id.add);
-            
-            final ListView mList = (ListView) dialog.findViewById(R.id.list);
-            cursorStream = databaseHelper.getStreams(); 	
-
-            String[] headers = new String[] {"NAMESTREAM", "URLSTREAM"};
-            mAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item,
-            		cursorStream, headers, new int[]{android.R.id.text1, android.R.id.text2},0);
-            mList.setAdapter(mAdapter);
-        
-    		mAdd.setOnClickListener(new OnClickListener() {
-    			
-    		@Override
-    		public void onClick(View arg0) {
-    			// TODO Auto-generated method stub
-    			String a1 = mText.getText().toString();
-   				String a2 = etSite.getText().toString();
-   				databaseHelper.insertDatiStream( databaseHelper.getWritableDatabase(), a1,a2);
-
-   				Toast.makeText(getApplicationContext(), "save", Toast.LENGTH_SHORT).show();						
-   				cursorStream = databaseHelper.getStreams(); 
-   				mAdapter.changeCursor(cursorStream);
-                // blank input
-                mText.setText("");
-                etSite.setText("");
-   			}
-    		});
-    		
-    		
-    		mList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-					View view, int position, long id) {
-				// TODO Auto-generated method stub
-					
-				final int p = position;
-				AlertDialog.Builder miaAlert = new AlertDialog.Builder(context);
-				miaAlert.setMessage(R.string.msg_alert);
-				miaAlert.setTitle(R.string.title_alert);
-				String yes = getResources().getString(R.string.choice_yes);
-				String no = getResources().getString(R.string.choice_no);
-				
-				miaAlert.setCancelable(false);
-				miaAlert.setPositiveButton(yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-//					  Toast.makeText(getApplicationContext(), "SI", Toast.LENGTH_SHORT).show();
-					//Toast.makeText(getApplicationContext(), Integer.toString(p), Toast.LENGTH_SHORT).show();						
-
-
-                    cursorStream.moveToPosition(p);
-				    //Get the id value of this row
-				    String rowId = cursorStream.getString(0); //Column 0 of the cursor is the id
-				    databaseHelper.deleteStream( databaseHelper.getWritableDatabase(), new String[] {rowId});
-				    cursorStream = databaseHelper.getStreams(); 
-				    mAdapter.changeCursor(cursorStream);
-
-				}
-				});
-					    
-				miaAlert.setNegativeButton(no, new DialogInterface.OnClickListener() {
-			    public void onClick(DialogInterface dialog, int id) {
-//						  Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_SHORT).show();
-			    }
-				});
-				AlertDialog alert = miaAlert.create();
-				alert.show();
-//					return;
-				}
-			});
-    		
-    		dialog.show();
-            
-           
-            return true;     
-        }
-
-        
-        //
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-    
   
       // check network connection
       public boolean isConnected(){
@@ -972,6 +1128,60 @@ public class MainActivity extends Activity
     			return mySpinner;
     		}
     	}
+/////////////
+public class MyAdapterPacket extends ArrayAdapter<Packet> {
+
+    //  	    //Globals g = Globals.getInstance();
+    public MyAdapterPacket(Context ctx, int txtViewResourceId, List <Packet> objects) {
+        super(ctx, txtViewResourceId, objects);
+    }
+
+    @Override
+    public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+        return getCustomView(position, cnvtView, prnt);
+    }
+    @Override
+    public View getView(int pos, View cnvtView, ViewGroup prnt) {
+        return getCustomView(pos, cnvtView, prnt);
+    }
+    public View getCustomView(int position, View convertView,
+                              ViewGroup parent) {
+        //LayoutInflater inflater = getLayoutInflater();
+
+
+        View mySpinner = convertView;
+
+        if (mySpinner == null) {
+
+            LayoutInflater vi;
+            vi = LayoutInflater.from(getContext());
+            mySpinner = vi.inflate(R.layout.custom_sp_packets, null);
+
+        }
+
+        Packet ite = getItem(position);
+
+        TextView main_text = (TextView) mySpinner
+                .findViewById(R.id.text_s1p);
+        //main_text.setText(spinnerValues[position]);
+        //String o=" ("+getResources().getString(R.string.bunny_off)+")";
+        main_text.setTextColor(Color.BLACK);
+        main_text.setText(ite.getPacketName());
+
+        TextView subSpinner = (TextView) mySpinner
+                .findViewById(R.id.text_s2p);
+//    			subSpinner.setText(spinnerSubs[position]);
+        subSpinner.setTextColor(Color.BLACK);
+        subSpinner.setText(ite.getPacketDate());
+
+        ImageView left_icon = (ImageView) mySpinner
+                .findViewById(R.id.ppp);
+
+        left_icon.setImageResource(R.drawable.ic_packet);
+
+        return mySpinner;
+    }
+}
 
 
 }

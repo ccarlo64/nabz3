@@ -4,7 +4,9 @@
     <string name="app_name">Nabz</string>
     <string name="action_settings">Paramètres</string>
     <string name="action_stream">Radio stream</string>
-    
+    <string name="action_packet">Packet</string>
+    <string name="menu">menu options</string>
+
     <string name="bunny_on">en ligne</string>
     <string name="bunny_off">déconnecté</string>
     
@@ -13,7 +15,8 @@
     <string name="dialog_setting">Connection paramètres</string>
     <string name="update_ok">mise à jour</string>
     <string name="chiudi">près</string>
-    <string name="dialog_stream">Radio stream liste</string>    
+    <string name="dialog_stream">Radio stream liste</string>
+    <string name="dialog_packet">Packet liste</string>
     <string name="choice_yes">oui</string>
     <string name="choice_no">no</string>
     
@@ -25,7 +28,9 @@
     <string name="dialog_setting_save">Sauver</string>        
     <string name="dialog_stream_stream_name">Nom de radio</string>            
     <string name="dialog_stream_url">Url</string>
-        
+    <string name="dialog_packet_name">Nom</string>
+    <string name="dialog_packet_data">Hex</string>
+
     <string name="plugin_left">Oreille gauche</string>
     <string name="plugin_right">Oreille droite</string>
     <string name="plugin_send">Envoyer au lapin</string>
@@ -42,6 +47,7 @@
     <string name="plugin_title4">Clignotement du nez</string>
     <string name="plugin_title5">Réveiller et dormir</string>
     <string name="plugin_title6">Webradio</string>
+    <string name="plugin_title7">Packet</string>
     <string name="title_alert">Alerte</string>
     <string name="msg_alert">Supprimer?</string>
     
@@ -53,6 +59,7 @@
         <item>Ambient (Clignotement du nez)</item>
         <item>Réveiller et dormir</item>
         <item>Webradio</item>
+        <item>Packet</item>
     </string-array>
 
     <string-array

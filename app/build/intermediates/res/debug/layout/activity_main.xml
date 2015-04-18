@@ -17,5 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="." />
-       
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu"
+        android:id="@+id/bnt_option"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.21" />
+
 </LinearLayout><!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/src/main/res/layout/activity_main.xml -->

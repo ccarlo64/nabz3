@@ -11,7 +11,6 @@
         <item>violet</item>
         <item>yellow</item>
         <item>white</item>
-        <item>Webradio</item>
     </string-array>
     <string-array name="array_plugin">
         <item>Ambient (muovi le orecchie)</item>
@@ -20,7 +19,8 @@
         <item>Ambient (lampeggio naso)</item>
         <item>Sveglia e dormi</item>
         <item>Webradio</item>
-        </string-array>
+        <item>Pacchetti</item>
+    </string-array>
     <!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-it/values.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Vai alla home page"</string>
@@ -40,6 +40,7 @@
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Condividi con %s"</string>
     <!-- From: file:/C:/Users/carlo/AndroidStudioProjects/Nabz/app/src/main/res/values-it/strings.xml -->
     <eat-comment/>
+    <string name="action_packet">Packet</string>
     <string name="action_settings">Impostazioni</string>
     <string name="action_stream">Radio stream</string>
     <string name="app_name">Nabz</string>
@@ -48,6 +49,9 @@
     <string name="chiudi">chiudi</string>
     <string name="choice_no">no</string>
     <string name="choice_yes">si</string>
+    <string name="dialog_packet">Elenco pacchetti dati</string>
+    <string name="dialog_packet_data">Dati esa</string>
+    <string name="dialog_packet_name">Nome</string>
     <string name="dialog_setting">Dati di connessione</string>
     <string name="dialog_setting_cancel">Annulla</string>
     <string name="dialog_setting_mac">Mac address</string>
@@ -58,6 +62,7 @@
     <string name="dialog_stream">Elenco radio stream</string>
     <string name="dialog_stream_stream_name">Nome della radio</string>
     <string name="dialog_stream_url">Url</string>
+    <string name="menu">menu opzioni</string>
     <string name="msg_alert">Cancelli?</string>
     <string name="net_ko">problemi di connessione</string>
     <string name="net_ok">connessione avvenuta</string>
@@ -75,6 +80,7 @@
     <string name="plugin_title4">Lampeggio naso</string>
     <string name="plugin_title5">Sveglia e dormi</string>
     <string name="plugin_title6">Webradio</string>
+    <string name="plugin_title7">Packet</string>
     <string name="plugin_wakeup">sveglia</string>
     <string name="title_alert">Attenzione</string>
     <string name="update_ok">dati aggiornati</string>

@@ -19,6 +19,11 @@
         android:title="@string/action_stream"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_packet"
+        android:orderInCategory="100"
+        android:title="@string/action_packet"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/about"
         android:orderInCategory="100"
         android:title="About"

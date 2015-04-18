@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
 	private static final String DATABASE_NAME = "nabaztag.db";
 
-	private static final int SCHEMA_VERSION = 6;
+	private static final int SCHEMA_VERSION = 7;
 
 	public DatabaseHelper(Context context)
 	{
@@ -46,7 +46,25 @@ public class DatabaseHelper extends SQLiteOpenHelper
         //insertDatiStream(db,"RDS","http://46.37.20.205:8000/rdsmp3");
                 insertDemoStreams(db);
 
-	}
+            sql = "CREATE TABLE PACKET ( _id "
+                    + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + " NAMEPACKET TEXT NOT NULL,"
+                    + " DATEPACKET TEXT);";
+            Log.d("db",sql);
+            db.execSQL(sql);
+            insertDemoPackets(db);
+
+
+
+
+    }
+    private void insertDemoPackets( SQLiteDatabase db ) {
+        insertDatiPacket(db,"Reboot","7F09000000FF");
+        insertDatiPacket(db,"Karotz 0001","7FCC000001FF");
+    }
+
+
+
     private void insertDemoStreams( SQLiteDatabase db ) {
         insertDatiStream(db,"Stop stream"," ");
         insertDatiStream(db,"RDS","http://46.37.20.205:8000/rdsmp3");
@@ -72,15 +90,26 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		v.put("NAMESTREAM", a1);
 		v.put("URLSTREAM", a2);
 		db.insert("STREAM", null, v);
-	}	
-	
-	public void deleteStream( SQLiteDatabase db, String[] r)
+	}
+    public void insertDatiPacket( SQLiteDatabase db, String a1, String a2)
+    {
+        ContentValues v = new ContentValues();
+        v.put("NAMEPACKET", a1);
+        v.put("DATEPACKET", a2);
+        db.insert("PACKET", null, v);
+    }
+
+    public void deleteStream( SQLiteDatabase db, String[] r)
 	{
 		db.delete("STREAM", "_id = ?", r);
 	}
-	
-	
-	public void updateDati( String a1, String a2, String a3) //, String a4 )
+    public void deletePacket( SQLiteDatabase db, String[] r)
+    {
+        db.delete("PACKET", "_id = ?", r);
+    }
+
+
+    public void updateDati( String a1, String a2, String a3) //, String a4 )
 	{
 		String strFilter = "ID=1";
 		SQLiteDatabase db = getWritableDatabase();
@@ -108,7 +137,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		return cursor;
 	}
-
+    public Cursor getPackets()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT _ID, NAMEPACKET, DATEPACKET FROM PACKET";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
+    }
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2)
 	{
@@ -123,6 +158,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
         Log.d("db",sql);
         arg0.execSQL(sql);
         insertDemoStreams(arg0);
+        sql = "CREATE TABLE PACKET ( _id "
+                + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + " NAMEPACKET TEXT NOT NULL,"
+                + " DATEPACKET TEXT);";
+        Log.d("db",sql);
+        arg0.execSQL(sql);
+        insertDemoPackets(arg0);
 //onCreate(arg0);
 	}
 	
@@ -160,6 +202,26 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
  	  return sd;
 	}
+
+    public ArrayList<Packet> getPacketData()
+    {
+        ArrayList<Packet> sd = new ArrayList<Packet>();
+
+        String selectQuery = "SELECT  * FROM PACKET";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                sd.add( new Packet(cursor.getString(1),cursor.getString(2)));
+                Log.d("getPacketData",cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+
+        return sd;
+    }
+
+
 /*
 	public List<String> getStream1()
 	{

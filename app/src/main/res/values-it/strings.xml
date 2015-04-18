@@ -4,7 +4,9 @@
     <string name="app_name">Nabz</string>
     <string name="action_settings">Impostazioni</string>
     <string name="action_stream">Radio stream</string>
-    
+    <string name="action_packet">Packet</string>
+    <string name="menu">menu opzioni</string>
+
     <string name="bunny_on">in linea</string>
     <string name="bunny_off">non in linea</string>
         
@@ -14,6 +16,7 @@
     <string name="update_ok">dati aggiornati</string>
     <string name="chiudi">chiudi</string>
     <string name="dialog_stream">Elenco radio stream</string>
+    <string name="dialog_packet">Elenco pacchetti dati</string>
     <string name="choice_yes">si</string>
     <string name="choice_no">no</string>
     
@@ -25,7 +28,9 @@
     <string name="dialog_setting_save">Salva</string>    
     <string name="dialog_stream_stream_name">Nome della radio</string>            
     <string name="dialog_stream_url">Url</string>
-        
+    <string name="dialog_packet_name">Nome</string>
+    <string name="dialog_packet_data">Dati esa</string>
+
     <string name="plugin_left">Orecchio sinistro</string>
     <string name="plugin_right">Orecchio destro</string>
     <string name="plugin_send">Invia al coniglio</string>
@@ -42,6 +47,7 @@
     <string name="plugin_title4">Lampeggio naso</string>
     <string name="plugin_title5">Sveglia e dormi</string>
     <string name="plugin_title6">Webradio</string>
+    <string name="plugin_title7">Packet</string>
     <string name="title_alert">Attenzione</string>
     <string name="msg_alert">Cancelli?</string>
         
@@ -53,7 +59,8 @@
         <item>Ambient (lampeggio naso)</item>
         <item>Sveglia e dormi</item>
         <item>Webradio</item>
-        </string-array>
+        <item>Pacchetti</item>
+    </string-array>
 
     <string-array
         name="array_colori">
@@ -65,7 +72,6 @@
         <item>violet</item>
         <item>yellow</item>
         <item>white</item>
-        <item>Webradio</item>
     </string-array>
     
 </resources>
